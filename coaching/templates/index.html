@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="page-header">
+  <h1>My Coaching Sessions</h1>
+</section>
+
+<a href="{% url 'session-create' %}" class="btn">+ New Session</a>
+
+<section class="card-container">
+  {% for session in sessions %}
+    <div class="card">
+      <a href="{% url 'session-detail' session.id %}">
+        <h2>{{ session.title }}</h2>
+        <p>{{ session.description|truncatewords:15 }}</p>
+        <p><strong>Date:</strong> {{ session.date }}</p>
+        <p><strong>Location:</strong> {{ session.location }}</p>
+      </a>
+    </div>
+  {% empty %}
+    <p>No sessions yet — create your first one!</p>
+  {% endfor %}
+</section>
+
+{% endblock %}

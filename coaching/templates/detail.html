@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="page-header">
+  <h1>{{ session.title }}</h1>
+</section>
+
+<div class="session-details">
+  <p><strong>Description:</strong> {{ session.description }}</p>
+  <p><strong>Date:</strong> {{ session.date }}</p>
+  <p><strong>Location:</strong> {{ session.location }}</p>
+</div>
+
+{% if user == session.coach %}
+  <a href="{% url 'session-update' session.id %}" class="btn warn">Edit</a>
+  <a href="{% url 'session-delete' session.id %}" class="btn danger">Delete</a>
+{% endif %}
+
+{% endblock %}

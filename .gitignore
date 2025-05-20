@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+ENV/
+env/
+
+# Django SQLite database (if used locally)
+db.sqlite3
+
+# PostgreSQL password files, env secrets
+*.env
+.env.*
+
+# VSCode settings (optional)
+.vscode/
+
+# Mac / Windows system files
+.DS_Store
+Thumbs.db
+
+# Pipenv/Poetry lock file backups (optional)
+Pipfile.lock
+
+# Static asset caches
+staticfiles/
