@@ -14,76 +14,6 @@
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f5f6fa;
-      color: #333;
-      margin: 0;
-    }
-
-    header {
-      background-color: #142033;
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo a {
-      color: white;
-      font-size: 1.5rem;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-      margin: 0;
-      padding: 0;
-    }
-
-    nav ul li {
-      display: inline;
-    }
-
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .nav-logout-btn {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      font-family: inherit;
-      padding: 0;
-    }
-
-    .nav-logout-btn:hover {
-      text-decoration: underline;
-    }
-
-    main .container {
-      padding: 2rem;
-    }
-
-    footer {
-      background-color: #142033;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-  </style>
-
   {% block head %}{% endblock %}
 </head>
 <body>
@@ -96,8 +26,15 @@
       <ul>
         {% if user.is_authenticated %}
           <li>Hello, <strong>{{ user.username }}</strong></li>
-          <li><a href="{% url 'session-index' %}">My Sessions</a></li>
-          <li><a href="{% url 'session-create' %}">Create Session</a></li>
+
+          {% if user.profile.role == 'coach' %}
+            <li><a href="{% url 'session-index' %}">My Sessions</a></li>
+            <li><a href="{% url 'session-create' %}">Create Session</a></li>
+          {% elif user.profile.role == 'client' %}
+            <li><a href="{% url 'available-sessions' %}">Browse Sessions</a></li>
+            <li><a href="{% url 'my-reservations' %}">My Reservations</a></li>
+          {% endif %}
+
           <li>
             <form action="{% url 'logout' %}" method="post" style="display:inline;">
               {% csrf_token %}
@@ -105,6 +42,7 @@
             </form>
           </li>
         {% else %}
+          <li><a href="{% url 'available-sessions' %}">Browse Sessions</a></li>
           <li><a href="{% url 'signup' %}">Sign Up</a></li>
           <li><a href="{% url 'login' %}">Login</a></li>
         {% endif %}

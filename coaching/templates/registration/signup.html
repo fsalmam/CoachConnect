@@ -8,7 +8,7 @@
 {% block content %}
 <div class="page-header">
   <h1>Join CoachConnect</h1>
-  <img src="{% static 'images/join-coach.svg' %}" alt="Person signing up for coaching" />
+  {# Removed the image here #}
 </div>
 
 {% if error_message %}
@@ -19,6 +19,16 @@
   {% csrf_token %}
   <table>
     {{ form.as_table }}
+    <tr>
+      <th><label for="role">Role</label></th>
+      <td>
+        <select name="role" id="role" required>
+          <option value="">-- Select Role --</option>
+          <option value="coach">Coach</option>
+          <option value="client">Client</option>
+        </select>
+      </td>
+    </tr>
   </table>
   <button type="submit" class="btn submit">Sign Up</button>
 </form>

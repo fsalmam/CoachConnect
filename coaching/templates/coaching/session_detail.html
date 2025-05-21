@@ -7,9 +7,20 @@
   <p><strong>Description:</strong> {{ session.description }}</p>
   <p><strong>Coach:</strong> {{ session.coach.username }}</p>
 
-  {% if request.user == session.coach %}
+  {% if user == session.coach %}
     <hr>
     <a href="{% url 'session-update' session.pk %}">Edit</a> |
     <a href="{% url 'session-delete' session.pk %}">Delete</a>
+  {% else %}
+    {% if has_applied %}
+      <p><strong>You have already reserved this session.</strong></p>
+    {% else %}
+      <div class="reserve-wrapper">
+        <form method="post" onsubmit="return confirm('Are you sure you want to reserve this session?');">
+          {% csrf_token %}
+          <button type="submit" class="reserve-btn">Reserve</button>
+        </form>
+      </div>
+    {% endif %}
   {% endif %}
 {% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>My Reservations</h2>
+
+  <div class="card-grid">
+    {% for application in applications %}
+      <div class="card">
+        <h3>{{ application.session.title }}</h3>
+        <p><strong>Date:</strong> {{ application.session.date|date:"F d, Y, g:i A" }}</p>
+        <p><strong>Location:</strong> {{ application.session.location }}</p>
+        
+        <div class="reserve-wrapper">
+          <form method="post" action="{% url 'reservation-delete' application.pk %}" onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+            {% csrf_token %}
+            <button type="submit" class="reserve-btn">Cancel</button>
+          </form>
+        </div>
+      </div>
+    {% empty %}
+      <p>You have no reservations yet.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

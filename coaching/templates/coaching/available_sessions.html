@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Available Sessions</h1>
+  {% for session in sessions %}
+    <div class="card">
+      <h2>{{ session.title }}</h2>
+      <p>{{ session.description }}</p>
+      <p><strong>Date:</strong> {{ session.date }}</p>
+      <p><strong>Location:</strong> {{ session.location }}</p>
+      <a href="{% url 'session-detail' session.pk %}">View / Apply</a>
+    </div>
+  {% empty %}
+    <p>No sessions available at the moment.</p>
+  {% endfor %}
+{% endblock %}
