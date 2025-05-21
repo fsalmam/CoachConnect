@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>My Coaching Sessions</h1>
+  <a href="{% url 'session-create' %}" class="btn">+ New Session</a>
+
+  {% if sessions %}
+    <div class="card-container">
+      {% for session in sessions %}
+        <div class="card">
+          <h2>{{ session.title }}</h2>
+          <p><strong>Date:</strong> {{ session.date|date:"F j, Y, g:i A" }}</p>
+          <p><strong>Location:</strong> {{ session.location }}</p>
+          <a href="{% url 'session-detail' session.pk %}" class="btn">View</a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No sessions yet — create your first one!</p>
+  {% endif %}
+{% endblock %}

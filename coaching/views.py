@@ -7,8 +7,13 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from .forms import SessionForm  # You’ll create this next
+from .forms import SessionForm
 from .models import Session
+
+
+class SessionDetail(LoginRequiredMixin, DetailView):
+    model = Session
+    template_name = 'coaching/session_detail.html'
 
 
 class Home(LoginView):
@@ -18,18 +23,12 @@ class Home(LoginView):
 @login_required
 def session_index(request):
     sessions = Session.objects.filter(coach=request.user)
-    return render(request, 'index.html', {'sessions': sessions})
-
-
-@login_required
-def session_detail(request, session_id):
-    session = get_object_or_404(Session, id=session_id)
-    return render(request, 'detail.html', {'session': session})
+    return render(request, 'coaching/index.html', {'sessions': sessions})
 
 
 class SessionCreate(LoginRequiredMixin, CreateView):
     model = Session
-    fields = ['title', 'description', 'date', 'location']
+    form_class = SessionForm
 
     def form_valid(self, form):
         form.instance.coach = self.request.user
@@ -38,7 +37,7 @@ class SessionCreate(LoginRequiredMixin, CreateView):
 
 class SessionUpdate(LoginRequiredMixin, UpdateView):
     model = Session
-    fields = ['title', 'description', 'date', 'location']
+    form_class = SessionForm
 
 
 class SessionDelete(LoginRequiredMixin, DeleteView):

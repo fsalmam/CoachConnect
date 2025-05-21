@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>{{ session.title }}</h1>
+
+  <p><strong>Date:</strong> {{ session.date|date:"F d, Y, g:i A" }}</p>
+  <p><strong>Location:</strong> {{ session.location }}</p>
+  <p><strong>Description:</strong> {{ session.description }}</p>
+  <p><strong>Coach:</strong> {{ session.coach.username }}</p>
+
+  {% if request.user == session.coach %}
+    <hr>
+    <a href="{% url 'session-update' session.pk %}">Edit</a> |
+    <a href="{% url 'session-delete' session.pk %}">Delete</a>
+  {% endif %}
+{% endblock %}

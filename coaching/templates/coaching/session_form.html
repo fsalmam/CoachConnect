@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Create Session</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div>
+      {{ form.title.label_tag }}
+      {{ form.title }}
+    </div>
+
+    <div>
+      {{ form.date.label_tag }}
+      {{ form.date }}
+    </div>
+
+    <div>
+      {{ form.description.label_tag }}
+      {{ form.description }}
+    </div>
+
+    <div>
+      {{ form.location.label_tag }}
+      {{ form.location }}
+    </div>
+
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}
